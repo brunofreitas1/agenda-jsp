@@ -30,9 +30,32 @@ public class OperadoraDAO {
 			op.setCodOperadora(rs.getInt("cod_operadora"));
 			op.setCodigo(rs.getInt("codigo"));
 			op.setNome(rs.getString("nome"));
+			
+			operadoras.add(op);
+			
 		}
 		
 		return operadoras;
+	}
+	
+	public boolean inserir(Operadora op) throws SQLException{
+		
+		String sql = "INSERT INTO usuarios VALUES (0,?)";
+		
+		con = ConnectionDB.getConnection();
+		
+		ps = con.prepareStatement(sql);
+		//ps.setInt(1, op.getCodigo());
+		ps.setString(2, op.getNome());
+		
+		int result = ps.executeUpdate();
+		
+		if(result > 0){
+			return true;
+		}
+		
+		return false;
+		
 	}
 	
 }

@@ -1,3 +1,5 @@
+<%@page import="dao.OperadoraDAO"%>
+<%@page import="vo.Operadora"%>
 <%@page import="controller.Mensagem"%>
 <%@page import="controller.Agenda"%>
 <%@page import="vo.Contato"%>
@@ -49,10 +51,12 @@
 				    <option selected value="">Selecione</option>
 					<%
 						//recupera a lista
-						List<String> ops = Agenda.getOperadoras();
+						OperadoraDAO oDao = new OperadoraDAO();
+				
+						List<Operadora> operadora = oDao.listarTodas();
 						//percorre a lista preenchendo as opções do select
-						for(String o : ops){
-							out.print("<option>" + o + "</option>");
+						for(Operadora o : operadora){
+							out.print("<option>" + o.getNome() + "</option>");
 						}
 					%>
 				  </select>
@@ -68,7 +72,7 @@
 			<div class="modal-dialog" role="document">
 				<div class="modal-content">
 					<div class="modal-header">
-						<h5 class="modal-title" id="modal-nova-operadora-label">Nova Operadora</h5>
+						<h5 class="modal-title" id="modal-nova-operadora-label" name="nOperadora">Nova Operadora</h5>
 						<button type="button" class="close" data-dismiss="modal"
 							aria-label="Close">
 							<span aria-hidden="true">&times;</span>
