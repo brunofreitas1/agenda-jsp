@@ -1,5 +1,6 @@
 <%@page import="vo.Operadora"%>
 <%@page import="dao.OperadoraDAO"%>
+
 <%@page import="controller.Mensagem"%>
 <%@page import="controller.Agenda"%>
 <%@page import="vo.Contato"%>
@@ -71,7 +72,7 @@
 			<div class="modal-dialog" role="document">
 				<div class="modal-content">
 					<div class="modal-header">
-						<h5 class="modal-title" id="modal-nova-operadora-label">Nova Operadora</h5>
+						<h5 class="modal-title" id="modal-nova-operadora-label" name="nOperadora">Nova Operadora</h5>
 						<button type="button" class="close" data-dismiss="modal"
 							aria-label="Close">
 							<span aria-hidden="true">&times;</span>

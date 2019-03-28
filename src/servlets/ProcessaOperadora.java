@@ -1,6 +1,8 @@
 package servlets;
 
 import java.io.IOException;
+import java.sql.SQLException;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -9,6 +11,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import controller.Agenda;
 import controller.Mensagem;
+import dao.OperadoraDAO;
+import vo.Operadora;
 
 @WebServlet("/ProcessaOperadora")
 public class ProcessaOperadora extends HttpServlet {
@@ -25,15 +29,23 @@ public class ProcessaOperadora extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		String operadora = request.getParameter("operadora");
+		Operadora op = new Operadora();
+		OperadoraDAO opD = new OperadoraDAO();
 		
-		if(operadora != null){
-			Agenda.getOperadoras().add(operadora);
+		op.setNome("nOperadora");
+		
+		if(op.getNome().trim().equals("")){
+			response.sendRedirect("inicial.jsp");
+		}else{
+			try {
+				opD.inserir(op);
+				Mensagem.addMensagem("Nova operadora adicionada");
+				response.sendRedirect("inicial.jsp");
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
-		
-		Mensagem.addMensagem("Operadora Adicionada com Sucesso");
-		
-		response.sendRedirect("inicial.jsp?mensagem=Operadora Adicionada");
 		
 	}
 }
