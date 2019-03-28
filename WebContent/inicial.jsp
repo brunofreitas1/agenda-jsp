@@ -1,3 +1,5 @@
+<%@page import="vo.Operadora"%>
+<%@page import="dao.OperadoraDAO"%>
 <%@page import="controller.Mensagem"%>
 <%@page import="controller.Agenda"%>
 <%@page import="vo.Contato"%>
@@ -48,12 +50,13 @@
 				  <select class="custom-select"  id="operadoras" name="operadora">
 				    <option selected value="">Selecione</option>
 					<%
-						//recupera a lista
-						List<String> ops = Agenda.getOperadoras();
-						//percorre a lista preenchendo as opções do select
-						for(String o : ops){
-							out.print("<option>" + o + "</option>");
-						}
+						OperadoraDAO oDAO = new OperadoraDAO();
+					
+					List<Operadora> operadora = oDAO.listarTodas();
+					
+					for(Operadora o : operadora){
+						out.print("<option value='" + o.getCodigo() + "'>" + o.getNome()+ "</option>");
+					}
 					%>
 				  </select>
 				  <div class="input-group-append">
