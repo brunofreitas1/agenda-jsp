@@ -20,7 +20,7 @@ public class ContatoDAO {
 public boolean inserir(Contato t) throws SQLException{
 		
 		//declara o sql
-		String sql = "INSERT INTO contato VALUES (0,?,?,?,?)";
+		String sql = "INSERT INTO contato VALUES (0,?,?,?)";
 		
 		//obtem a conexão
 		con = ConnectionDB.getConnection();
@@ -29,7 +29,7 @@ public boolean inserir(Contato t) throws SQLException{
 		ps = con.prepareStatement(sql);
 		ps.setString(1, t.getNome());
 		ps.setString(2, t.getTelefone());
-		ps.setInt(3, t.getOperadora().getCodOperadora());
+		ps.setInt(3, t.getOperadora().getCodigo());
 		
 		//executa o sql e retorna o resultado
 		return ps.executeUpdate() > 0;

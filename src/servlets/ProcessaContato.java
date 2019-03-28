@@ -1,6 +1,7 @@
 package servlets;
 
 import java.io.IOException;
+import java.sql.SQLException;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -10,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import controller.Agenda;
 import controller.Mensagem;
+import dao.ContatoDAO;
 import vo.Contato;
 import vo.Operadora;
 
@@ -27,18 +29,31 @@ public class ProcessaContato extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		Contato p = new Contato();
-		p.setNome(request.getParameter("nome"));
-		p.setTelefone(request.getParameter("telefone"));
+		
+		Contato c = new Contato();
+		ContatoDAO cD = new ContatoDAO();
+		
+		c.setNome(request.getParameter("nome"));
+		c.setTelefone(request.getParameter("telefone"));
 		Operadora op = new Operadora();
-		op.setNome(request.getParameter("operadora"));
-		p.setOperadora(op);
+		op.setCodigo(Integer.valueOf(request.getParameter("operadora")));
+		c.setOperadora(op);
 		
-		Agenda.getAgenda().add(p);
+		if(c.getNome().trim().equals("") || c.getTelefone().trim().equals("")
+				|| c.getOperadora().equals("")){
+			Mensagem.addMensagem("Todos os campos são o brigatórios");
+			response.sendRedirect("inicial.jsp");
+		}else{
+				try {
+					cD.inserir(c);
+					Mensagem.addMensagem("Contato salvo com sucesso");
+					response.sendRedirect("inicial.jsp");
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+		}
 		
-		Mensagem.addMensagem("Contato salvo com sucesso");
-		
-		response.sendRedirect("inicial.jsp");
 		
 	}
 

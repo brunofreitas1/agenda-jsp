@@ -4,24 +4,25 @@ import java.util.ArrayList;
 import java.util.List;
 
 import vo.Contato;
+import vo.Operadora;
 
 public class Agenda {
 
 	private static List<Contato> agenda = new ArrayList<>();
-	private static List<String> operadoras = new ArrayList<>();
+	private static List<Operadora> operadoras = new ArrayList<>();
 
-	public static List<String> getOperadoras() {
+	public static List<Operadora> getOperadoras() {
 		if (operadoras.isEmpty()) {
-			operadoras.add("Vivo");
-			operadoras.add("Claro");
-			operadoras.add("Oi");
-			operadoras.add("Tim");
-			operadoras.add("CTBC Telecom");
+			Operadora op = new Operadora();
+			op.setCodigo(1);
+			op.setNome("VIVO");
+			op.setCodOperadora(015);
+			operadoras.add(op);
 		}
 		return operadoras;
 	}
 
-	public static void setOperadoras(List<String> operadoras) {
+	public static void setOperadoras(List<Operadora> operadoras) {
 		Agenda.operadoras = operadoras;
 	}
 
